@@ -1,0 +1,13 @@
+.loginInput {
+  background-color: rgb(225, 233, 230);
+  display: flex;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+}
+
+.form {
+  width: 70%;
+  margin-left: 100px;
+  margin-top: 30px;
+}
