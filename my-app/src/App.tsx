@@ -86,6 +86,14 @@ function App() {
           <a href="/login">Login</a>
         </button>
       </div>
+      <div>
+        <img
+          src="backgroundLogin.png"
+          key="backgroundLogin"
+          alt="backgroundLogin"
+          className="image"
+        ></img>
+      </div>
     </form>
   );
 }
