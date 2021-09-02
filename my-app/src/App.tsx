@@ -1,7 +1,10 @@
 import './App.css';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { Dispatch } from 'redux';
+import icon from '../src/img/header-logo.png';
+import hide from '../src/img/icon_hide_password.png';
+import back from '../src/img/login_bg.png';
 import {
   AUTH_ERROR,
   authDispatchTypes,
@@ -14,6 +17,7 @@ import {
 } from '../src/types/authTypes';
 import { removeToken, setToken } from '../src/utils/cookies/tokensCookie';
 import environment from './environment';
+import { setUserId } from './utils/cookies/userCookies';
 
 // email,
 // password,
@@ -27,74 +31,95 @@ import environment from './environment';
 //   // Here log response from server
 // };
 
-export const loginUser =
-  (email: string, password: string) =>
-  async (dispatch: Dispatch<authDispatchTypes>) => {
-    try {
-      const fullUrl = `${environment.baseUrl}admin/auth/tokens`;
-      await axios
-        .post(fullUrl, {
-          email,
-          password,
-          deviceName,
-        })
-        .then(function (response) {
-          setToken(response.data.token.token);
-          const id = response.data.token.userId;
-          setUserId(id);
-        });
-      dispatch({
-        type: LOGIN_SUCCESS,
-      });
-    } catch (e: any) {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: 'login',
-      });
-    }
-  };
+// async (dispatch: Dispatch<authDispatchTypes>) => {
+//   try {
+//     const fullUrl = `${environment.baseUrl}admin/auth/tokens`;
+//     await axios
+//       .post(fullUrl, {
+//         email,
+//         password,
+//         deviceName,
+//       })
+//       .then(function (response) {
+//         setToken(response.data.token.token);
+//         const id = response.data.token.userId;
+//         setUserId(id);
+//       });
+//     dispatch({
+//       type: LOGIN_SUCCESS,
+//     });
+//   } catch (e: any) {
+//     dispatch({
+//       type: AUTH_ERROR,
+//       payload: 'login',
+//     });
+//   }
 
 function App() {
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  });
+
+  const loginUser = (e: any) => {
+    e.preventDefault();
+
+    // If Valid show console log
+
+    // If Not valid show error under input
+    console.log(credentials);
+  };
+
   return (
-    <form className="form" onSubmit={loginUser}>
+    <div>
       <div>
-        <label>
-          Email
-          <input
-            // onChange={(event) => setUsername(event.target.value)}
-            type="text"
-            name="email"
-            className="loginInput"
-            placeholder="Email"
-          ></input>
-        </label>
+        <img src={icon} alt="icon" className="imageIcon"></img>
       </div>
       <div>
-        <label>
-          Password
-          <input
-            // onChange={(event) => setPassword(event.target.value)}
-            type="password"
-            name="password"
-            className="loginInput"
-            placeholder="Password"
-          ></input>
-        </label>
+        <p className="headTitle ">Bitte loggen Sie sich ein um fortzufahren.</p>
+        <img src={back} alt="backgroundLogin" className="image"></img>
       </div>
-      <div>
-        <button className="button">
-          <a href="/login">Login</a>
-        </button>
-      </div>
-      <div>
-        <img
-          src="backgroundLogin.png"
-          key="backgroundLogin"
-          alt="backgroundLogin"
-          className="image"
-        ></img>
-      </div>
-    </form>
+
+      <form className="form" onSubmit={(e: any) => loginUser(e)}>
+        <div>
+          <label>
+            <div className="text">Email</div>
+            <input
+              value={credentials.email}
+              onChange={(event) =>
+                setCredentials({ ...credentials, email: event.target.value })
+              }
+              type="text"
+              name="email"
+              className="loginInput"
+              placeholder="Email"
+            ></input>
+          </label>
+        </div>
+        <div>
+          <label>
+            <div className="text">Password</div>
+
+            <input
+              value={credentials.password}
+              onChange={(event) =>
+                setCredentials({ ...credentials, password: event.target.value })
+              }
+              type="password"
+              name="password"
+              className="loginInput"
+              placeholder="Password"
+            ></input>
+            <img src={hide} alt="icon" className="hideImage"></img>
+          </label>
+        </div>
+        <div>
+          <button type="submit" className="button">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 

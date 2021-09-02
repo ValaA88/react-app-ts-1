@@ -1,9 +1,8 @@
 import './App.css';
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 
 function Registration() {
-  return <div>Registration page</div>;
+  return <div>Login</div>;
 }
 
 export default Registration;
